@@ -25,21 +25,44 @@ const times = {
 
         return timestamp;
     },
-    getClientTime: function () {
+};
+
+const clients = {
+    sessions: [],
+    updateInfo: function() {
 
     },
+    findClientIndex: function(id) {
+        let clientIndex;
+
+        this.sessions.forEach(function (session, index) {
+            if (id === session.id) {
+                clientIndex = index;
+            }
+        });
+
+        return clientIndex;
+    }
 };
 
 io.on('connection', function(socket){
 
     io.emit('initConnection', socket.id);
 
-    socket.on('sendPing', function() {
+    clients.sessions.push({
+        id: socket.id,
+        latency: 0
+    });
+
+    socket.on('sendPing', function(userInfo) {
+
+
         socket.emit('sendPong');
     });
 
-    socket.on('userInfo', function(userInfo){
-        console.log(userInfo);
+    socket.on('disconnect', function () {
+        let index = clients.findClientIndex(socket.id);
+        clients.sessions.splice(index, 1);
     });
 
     socket.on('userTime', function(timestamp){
@@ -47,7 +70,8 @@ io.on('connection', function(socket){
     });
 
     socket.on('userPlayed', function(playData){
-        console.log(playData);
+        console.log(playData.time, playData.latency);
+
         io.emit('play', playData);
     });
 

@@ -6,7 +6,8 @@
         userPlayed: function() {
             const playData = {
                 songSrc: player.element.src,
-                time: Date.now()
+                time: Date.now(),
+                latency: latency.average
             };
 
             socket.emit('userPlayed', playData);
@@ -30,7 +31,9 @@
     const player = {
         element: document.querySelector("audio"),
         isPlaying: false,
-        play: function(song) {
+        play: function(playData) {
+            console.log(playData);
+
             this.element.play();
             this.isPlaying = true;
         },
@@ -59,7 +62,13 @@
         },
         ping: function() {
             this.startTime = Date.now();
-            socket.emit('sendPing');
+
+            const userInfo = {
+                id: client.id,
+                latency: this.average
+            };
+
+            socket.emit('sendPing', userInfo);
         },
         pong: function () {
             let latency = Date.now() - this.startTime;
@@ -73,7 +82,7 @@
 
             setInterval(function() {
                 _this.ping()
-            }, 2000);
+            }, 1000);
 
             socket.on('sendPong', function() {
                 _this.pong()
@@ -85,13 +94,6 @@
         init: function () {
             socket.on('initConnection', function(userId){
                 client.id = userId;
-
-                const userInfo = {
-                    id: userId,
-                    time: Date.now()
-                };
-
-                socket.emit('userInfo', userInfo);
             });
 
             socket.on('play', function(song){
