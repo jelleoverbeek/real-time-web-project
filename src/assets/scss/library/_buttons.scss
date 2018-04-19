@@ -1,7 +1,9 @@
-button {
+button, .button {
     display: block;
     width: 100%;
     background-color: $color-blue;
+    text-decoration: none;
+    text-align: center;
     color: $color-white;
     border: none;
     padding: rem(24) rem(32);
