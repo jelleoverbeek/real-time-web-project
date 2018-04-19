@@ -1,0 +1,26 @@
+$browser-context: 16; // Default browser font size
+@function rem($pixels, $context: $browser-context) {
+    @return #{$pixels/$context}rem;
+}
+
+$max-mobile: rem(480);
+$max-tablet-portrait: rem(720);
+$max-tablet-landscape: rem(1088);
+
+@mixin max-tablet-landscape() {
+    @media (max-width: $max-tablet-landscape) {
+        @content;
+    }
+}
+
+@mixin max-tablet-portrait() {
+    @media (max-width: $max-tablet-portrait) {
+        @content;
+    }
+}
+
+@mixin max-mobile() {
+    @media (max-width: $max-mobile) {
+        @content;
+    }
+}
