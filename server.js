@@ -6,7 +6,7 @@ const io = require('socket.io')(http);
 
 // set the port of our application
 // process.env.PORT lets the port be set by Heroku
-let port = process.env.PORT || 3000;
+let port = process.env.PORT || 8888;
 
 nunjucks.configure('src/views', {
     autoescape: true,
@@ -16,13 +16,44 @@ nunjucks.configure('src/views', {
 
 app.use(express.static(__dirname + '/src/assets'));
 
+const times = {
+    getServerTime: function () {
+        let timestamp = new Date();
+
+        timestamp = timestamp.getTime();
+        console.log(timestamp);
+
+        return timestamp;
+    },
+    getClientTime: function () {
+
+    },
+};
+
 io.on('connection', function(socket){
 
-    console.log("connected");
+    io.emit('initConnection', socket.id);
 
-    // socket.on('chat message', function(msg){
-    //     io.emit('chat message', msg);
-    // });
+    socket.on('sendPing', function() {
+        socket.emit('sendPong');
+    });
+
+    socket.on('userInfo', function(userInfo){
+        console.log(userInfo);
+    });
+
+    socket.on('userTime', function(timestamp){
+        console.log(timestamp);
+    });
+
+    socket.on('userPlayed', function(playData){
+        console.log(playData);
+        io.emit('play', playData);
+    });
+
+    socket.on('userPaused', function(){
+        io.emit('pause');
+    });
 });
 
 app.get('/', function(req, res) {
