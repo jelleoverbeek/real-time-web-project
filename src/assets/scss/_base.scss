@@ -1,0 +1,67 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: "Roboto", Arial, sans-serif;
+    color: $color-white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #1C1C1C;
+}
+
+body {
+    margin: 0;
+    padding-top: rem(64);
+
+    @include max-tablet-landscape() {
+        padding-top: rem(56);
+    }
+
+    @include max-tablet-portrait() {
+        padding-top: rem(48);
+    }
+
+    @include max-mobile() {
+        padding-top: rem(24);
+    }
+}
+
+h1 {
+    font-size: rem(36);
+    font-weight: 500;
+    margin-bottom: rem(16);
+}
+
+h2 {
+    font-size: rem(28);
+    font-weight: 500;
+    margin-top: rem(32);
+}
+
+h3 {
+    font-size: rem(24);
+    font-weight: 500;
+}
+
+p {
+    margin: 0;
+    font-size: rem(18);
+    color: $color-paragraph;
+
+    & + p {
+        margin-top: rem(8);
+    }
+}
+
+h2, h3, h4, h5, h6 {
+    margin-bottom: rem(0);
+
+    & + p, & + ul, & + ol {
+        margin-top: rem(8);
+    }
+}
+
+section {
+    padding: rem(32)
+}

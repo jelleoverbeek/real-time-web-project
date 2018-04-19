@@ -1,0 +1,64 @@
+button {
+  display: block;
+  width: 100%;
+  background-color: #445BED;
+  color: white;
+  border: none;
+  padding: 1.5rem 2rem;
+  border-radius: 0.3125rem;
+  font-size: 1.25rem;
+  margin-top: 1rem; }
+  button:hover, button:focus {
+    background-color: #364fec; }
+
+* {
+  box-sizing: border-box; }
+
+html {
+  font-family: "Roboto", Arial, sans-serif;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #1C1C1C; }
+
+body {
+  margin: 0;
+  padding-top: 4rem; }
+  @media (max-width: 68rem) {
+    body {
+      padding-top: 3.5rem; } }
+  @media (max-width: 45rem) {
+    body {
+      padding-top: 3rem; } }
+  @media (max-width: 30rem) {
+    body {
+      padding-top: 1.5rem; } }
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: 500;
+  margin-bottom: 1rem; }
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin-top: 2rem; }
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 500; }
+
+p {
+  margin: 0;
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.7); }
+  p + p {
+    margin-top: 0.5rem; }
+
+h2, h3, h4, h5, h6 {
+  margin-bottom: 0rem; }
+  h2 + p, h2 + ul, h2 + ol, h3 + p, h3 + ul, h3 + ol, h4 + p, h4 + ul, h4 + ol, h5 + p, h5 + ul, h5 + ol, h6 + p, h6 + ul, h6 + ol {
+    margin-top: 0.5rem; }
+
+section {
+  padding: 2rem; }

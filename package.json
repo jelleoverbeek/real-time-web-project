@@ -1,0 +1,28 @@
+{
+  "name": "real-time-web",
+  "version": "1.0.0",
+  "description": "This is the course repo for the 2018 edition of the course 'Real Time Web' which is part of the minor 'web' taught at the University of Applied Sciences Amsterdam.",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.15.2",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^4.0.1",
+    "nunjucks": "^3.1.2",
+    "socket.io": "^2.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "gulp && node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jelleoverbeek/real-time-web.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jelleoverbeek/real-time-web/issues"
+  },
+  "homepage": "https://github.com/jelleoverbeek/real-time-web#readme"
+}
