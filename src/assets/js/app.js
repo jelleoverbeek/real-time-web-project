@@ -42,16 +42,41 @@
 
     const latency = {
         startTime: 0,
-        latency: 0,
+        latency: [],
+        average: 0,
+        calcAverage: function() {
+            let total = 0;
+
+            this.latency.forEach(function (latency) {
+                total += latency
+            });
+
+            this.average = total / this.latency.length;
+
+            if(this.latency.length >= 5) {
+                this.latency = []
+            }
+        },
+        ping: function() {
+            this.startTime = Date.now();
+            socket.emit('sendPing');
+        },
+        pong: function () {
+            let latency = Date.now() - this.startTime;
+            this.latency.push(latency);
+            this.calcAverage();
+
+            return latency;
+        },
         init: function () {
+            const _this = this;
+
             setInterval(function() {
-                this.startTime = Date.now();
-                socket.emit('sendPing');
-            }, 1000);
+                _this.ping()
+            }, 2000);
 
             socket.on('sendPong', function() {
-                this.latency = Date.now() - startTime;
-                console.log(this.latency);
+                _this.pong()
             });
         }
     };
