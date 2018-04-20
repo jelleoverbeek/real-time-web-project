@@ -31,9 +31,7 @@
     const player = {
         element: document.querySelector("audio"),
         isPlaying: false,
-        play: function(playData) {
-            console.log(playData);
-
+        play: function(song) {
             this.element.play();
             this.isPlaying = true;
         },
@@ -96,8 +94,20 @@
                 client.id = userId;
             });
 
-            socket.on('play', function(song){
-                player.play(song);
+            socket.on('sendTimestamps', function() {
+                socket.emit('getTimestamps', Date.now());
+            });
+
+            socket.on('play', function(latency){
+
+                console.log(latency)
+
+                setTimeout(function(){
+
+                    player.play();
+
+                }, latency);
+
             });
 
             socket.on('pause', function(song){

@@ -29,8 +29,8 @@ const times = {
 
 const clients = {
     sessions: [],
-    updateInfo: function() {
-
+    updateLatency: function(index, latency) {
+        this.sessions[index].latency = latency;
     },
     findClientIndex: function(id) {
         let clientIndex;
@@ -54,23 +54,28 @@ io.on('connection', function(socket){
         latency: 0
     });
 
+    socket.sessionIndex = clients.findClientIndex(socket.id);
+
     socket.on('sendPing', function(userInfo) {
-
-
+        clients.updateLatency(socket.sessionIndex, userInfo.latency);
         socket.emit('sendPong');
     });
 
     socket.on('disconnect', function () {
-        let index = clients.findClientIndex(socket.id);
-        clients.sessions.splice(index, 1);
-    });
-
-    socket.on('userTime', function(timestamp){
-        console.log(timestamp);
+        clients.sessions.splice(socket.sessionIndex, 1);
     });
 
     socket.on('userPlayed', function(playData){
-        console.log(playData.time, playData.latency);
+        console.log(playData);
+        io.emit('sendTimestamps');
+    });
+
+    socket.on('getTimestamps', function(timestamp) {
+        let latency = timestamp - clients.sessions[socket.sessionIndex].latency;
+
+        const playData = {
+            latency: latency
+        };
 
         io.emit('play', playData);
     });
