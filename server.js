@@ -8,9 +8,9 @@ var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
-var client_id = 'cd6ee3d3d13f420f843a3f71d340eb59'; // Your client id
-var client_secret = '5665c12af2cf4995beef50a4821a3824'; // Your secret
-var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+var client_id = process.env.CLIENT_ID; // Your client id
+var client_secret = process.env.CLIENT_SECRECT; // Your secret
+var redirect_uri = process.env.CALLBACK; // Your redirect uri
 
 // set the port of our application
 // process.env.PORT lets the port be set by Heroku
