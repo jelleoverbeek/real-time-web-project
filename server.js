@@ -60,8 +60,7 @@ io.on('connection', function(socket){
     });
 
     socket.on('userPlayed', function(playData){
-
-        // io.emit('play', playData);
+        io.emit('play', playData);
     });
 
     socket.on('userPaused', function(){
@@ -72,6 +71,14 @@ io.on('connection', function(socket){
 app.get('/', function(req, res) {
     res.render('index.html', {
 
+    })
+});
+
+app.get('/new-session', function(req, res) {
+    res.render('session.html', {
+        data: {
+            sessionId: "1ABCA"
+        }
     })
 });
 

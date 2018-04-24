@@ -16,7 +16,7 @@
             socket.emit('userPaused');
         },
         init: function () {
-            document.querySelector(".play").addEventListener("click", (ev) => {
+            document.querySelector("#play").addEventListener("click", (ev) => {
                 if(player.isPlaying) {
                     this.userPaused();
                     console.log('pause');
