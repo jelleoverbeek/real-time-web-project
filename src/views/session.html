@@ -1,0 +1,15 @@
+{% extends "components/_layout.html" %}
+
+{% block content %}
+
+<section>
+    <h1>Session</h1>
+    <p>Your session ID</p>
+
+    <h3>{{ data.sessionId }}</h3>
+
+    <audio src="audio/song.wav" preload="auto" controls></audio>
+
+</section>
+
+{% endblock %}
