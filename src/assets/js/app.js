@@ -94,13 +94,9 @@
                 client.id = userId;
             });
 
-            socket.on('sendTimestamps', function() {
-                socket.emit('getTimestamps', Date.now());
-            });
-
             socket.on('play', function(latency){
 
-                console.log(latency)
+                console.log(latency);
 
                 setTimeout(function(){
 
