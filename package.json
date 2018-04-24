@@ -4,14 +4,15 @@
   "description": "This is the course repo for the 2018 edition of the course 'Real Time Web' which is part of the minor 'web' taught at the University of Applied Sciences Amsterdam.",
   "main": "server.js",
   "dependencies": {
+    "cookie-parser": "1.3.2",
+    "dotenv": "^5.0.1",
     "express": "^4.15.2",
     "gulp": "^3.9.1",
     "gulp-sass": "^4.0.1",
     "nunjucks": "^3.1.2",
-    "socket.io": "^2.1.0",
-    "cookie-parser": "1.3.2",
     "querystring": "~0.2.0",
-    "request": "~2.83.0"
+    "request": "~2.83.0",
+    "socket.io": "^2.1.0"
   },
   "devDependencies": {},
   "scripts": {
