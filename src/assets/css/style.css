@@ -1,15 +1,22 @@
-button {
+button, .button {
   display: block;
   width: 100%;
   background-color: #445BED;
+  text-decoration: none;
+  text-align: center;
   color: white;
   border: none;
   padding: 1.5rem 2rem;
   border-radius: 0.3125rem;
   font-size: 1.25rem;
   margin-top: 1rem; }
-  button:hover, button:focus {
+  button:hover, button:focus, .button:hover, .button:focus {
     background-color: #364fec; }
+
+.btn-spotify {
+  background-color: #6DB268; }
+  .btn-spotify:hover, .btn-spotify:focus {
+    background-color: #63ad5e; }
 
 * {
   box-sizing: border-box; }
