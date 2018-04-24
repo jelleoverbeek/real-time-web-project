@@ -1,7 +1,9 @@
-button {
+button, .button {
     display: block;
     width: 100%;
     background-color: $color-blue;
+    text-decoration: none;
+    text-align: center;
     color: $color-white;
     border: none;
     padding: rem(24) rem(32);
@@ -11,5 +13,13 @@ button {
 
     &:hover, &:focus {
         background-color: darken($color-blue, 3%);
+    }
+}
+
+.btn-spotify {
+    background-color: $color-green;
+
+    &:hover, &:focus {
+        background-color: darken($color-green, 3%);
     }
 }
