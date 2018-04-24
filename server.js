@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -7,8 +9,6 @@ const io = require('socket.io')(http);
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
-
-require('dotenv').config();
 
 var client_id = process.env.CLIENT_ID; // Your client id
 var client_secret = process.env.CLIENT_SECRET; // Your secret
@@ -97,7 +97,7 @@ app.get('/callback', function(req, res) {
                     refresh_token = body.refresh_token;
 
                 var options = {
-                    url: 'https://api.spotify.com/v1/me',
+                    url: 'https://api.spotify.com/v1/me/player/currently-playing',
                     headers: { 'Authorization': 'Bearer ' + access_token },
                     json: true
                 };
@@ -160,9 +160,6 @@ const times = {
 
 const clients = {
     sessions: [],
-    updateLatency: function(index, latency) {
-        this.sessions[index].latency = latency;
-    },
     findClientIndex: function(id) {
         let clientIndex;
 
@@ -179,16 +176,13 @@ const clients = {
 io.on('connection', function(socket){
 
     io.emit('initConnection', socket.id);
+    socket.sessionIndex = clients.findClientIndex(socket.id);
 
     clients.sessions.push({
         id: socket.id,
-        latency: 0
     });
 
-    socket.sessionIndex = clients.findClientIndex(socket.id);
-
     socket.on('sendPing', function(userInfo) {
-        clients.updateLatency(socket.sessionIndex, userInfo.latency);
         socket.emit('sendPong');
     });
 
@@ -197,17 +191,6 @@ io.on('connection', function(socket){
     });
 
     socket.on('userPlayed', function(playData){
-        console.log(playData);
-        io.emit('sendTimestamps');
-    });
-
-    socket.on('getTimestamps', function(timestamp) {
-        let latency = timestamp - clients.sessions[socket.sessionIndex].latency;
-
-        const playData = {
-            latency: latency
-        };
-
         io.emit('play', playData);
     });
 
