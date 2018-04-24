@@ -15,3 +15,11 @@ button, .button {
         background-color: darken($color-blue, 3%);
     }
 }
+
+.btn-spotify {
+    background-color: $color-green;
+
+    &:hover, &:focus {
+        background-color: darken($color-green, 3%);
+    }
+}

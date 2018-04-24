@@ -13,6 +13,11 @@ button, .button {
   button:hover, button:focus, .button:hover, .button:focus {
     background-color: #364fec; }
 
+.btn-spotify {
+  background-color: #6DB268; }
+  .btn-spotify:hover, .btn-spotify:focus {
+    background-color: #63ad5e; }
+
 * {
   box-sizing: border-box; }
 
