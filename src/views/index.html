@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{{ songs }}
+
 <section>
     <h1>Musync</h1>
     <p>Play songs together and in sync with your friends.</p>
@@ -11,9 +13,9 @@
         <audio src="audio/song-2.mp3" preload="auto" controls></audio>
     </div>
 
-    <button class="btn-song" data-artist="Jon Hopkins" data-title="Everything Connected" data-src="audio/song-2.mp3">Jon Hopkins - Everything Connected</button>
-    <button class="btn-song" data-artist="Floorplan" data-title="Tell You No Lie" data-src="audio/song-3.mp3">Floorplan - Tell You No Lie</button>
-    <button class="btn-song" data-artist="Maceo Plex" data-title="Discotico Plexico" data-src="audio/song-1.mp3">Maceo Plex - Discotico Plexico</button>
+    {% for song in songs %}
+        <button class="btn-song" data-artist="{{ song.artist }}" data-title="{{ song.title }}" data-src="audio/{{ song.src }}">{{ song.artist }} - {{ song.title }}</button>
+    {% endfor %}
 </section>
 
 {% endblock %}
