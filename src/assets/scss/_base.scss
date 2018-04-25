@@ -63,5 +63,18 @@ h2, h3, h4, h5, h6 {
 }
 
 section {
-    padding: rem(32)
+    padding: rem(32);
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+.offline {
+    background-color: #ce0000;
+    padding: rem(16);
+    width: 100%;
+}
+
+.hidden {
+    display: none;
 }

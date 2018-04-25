@@ -15,9 +15,6 @@
 
             playBtns.forEach(function (btn) {
                 btn.addEventListener("click", function (ev) {
-
-                    console.log(this.dataset.albumart);
-
                     const playData = {
                         src: this.dataset.src,
                         artist: this.dataset.artist,
@@ -110,7 +107,9 @@
             });
 
             socket.on('play', function(playData){
-                player.setPlayerMeta(playData.artist, playData.title, playData.img);
+                // player.setPlayerMeta(playData.artist, playData.title, playData.img);
+
+                console.log("play", playData);
 
                 setTimeout(function(){
                     player.play(playData.src);
@@ -120,6 +119,10 @@
             socket.on('pause', function(song){
                 player.pause(song);
             });
+
+            socket.on('reconnecting', (attemps) => {
+                console.log(attemps);
+            })
         }
     };
 

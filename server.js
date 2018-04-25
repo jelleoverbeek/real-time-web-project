@@ -153,10 +153,6 @@ io.on('connection', function(socket){
         io.emit('play', playData);
     });
 
-    socket.on('uploaded', function(playData){
-        io.emit('play', playData);
-    });
-
     socket.on('userPaused', function(){
         io.emit('pause');
     });
@@ -192,7 +188,6 @@ app.route('/upload').post(function (req, res, next) {
         console.log("astModifiedDate: "+JSON.stringify(files.fileUploaded.lastModifiedDate));
 
         scanDir();
-
         res.end();
     });
 });
