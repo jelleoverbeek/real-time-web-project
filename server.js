@@ -5,9 +5,13 @@ const express = require('express'),
     http = require('http').Server(app),
     nunjucks = require('nunjucks'),
     io = require('socket.io')(http),
+    mm = require('music-metadata'),
+    util = require('util'),
+    path = require( 'path' ),
+    fetch = require('node-fetch'),
     formidable = require('formidable'),
     bodyParser = require('body-parser'),
-    fs =require('fs-extra');
+    fs = require('fs-extra');
 
 let port = process.env.PORT || 8888;
 
@@ -19,20 +23,98 @@ nunjucks.configure('src/views', {
 
 app.use(express.static(__dirname + '/src/assets'));
 
+
 /* ==========================================================
  bodyParser() required to allow Express to see the uploaded files
 ============================================================ */
 app.use(bodyParser({defer: true}));
 
-const times = {
-    getServerTime: function () {
-        let timestamp = new Date();
+let songs = [];
+const songDir = "./src/assets/audio";
 
-        timestamp = timestamp.getTime();
-        console.log(timestamp);
+String.prototype.replaceAll = function(str1, str2, ignore) {
+    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+};
 
-        return timestamp;
-    },
+function pushToSongsArr(file) {
+    if (file.indexOf(".mp3") > 0) {
+        let songObj;
+        let songSrc = songDir + "/" + file;
+        let artist = "";
+        let title = "";
+
+        mm.parseFile(songSrc, {native: true})
+            .then(function (metadata) {
+                title = util.inspect(metadata.common.title);
+                artist = util.inspect(metadata.common.artist);
+
+                title = title.replaceAll("'", "");
+                artist = artist.replaceAll("'", "");
+
+                songObj = {
+                    title: title,
+                    artist: artist,
+                    src: file,
+                };
+
+                songs.push(songObj);
+                api.getSongData(artist, title, songs.length - 1);
+            })
+            .catch(function (err) {
+                console.error(err.message);
+            });
+    }
+}
+
+function scanDir() {
+    songs = [];
+
+    fs.readdir(songDir, function (err, files) {
+        if (err) {
+            console.error("Could not list the directory.", err);
+            process.exit(1);
+        }
+
+        files.forEach(function (file, index) {
+            pushToSongsArr(file)
+        });
+    });
+}
+
+scanDir();
+
+const api = {
+    baseUri: "http://ws.audioscrobbler.com/2.0/",
+    key: process.env.KEY,
+    getSongData: function (artist, title, songIndex) {
+        fetch(this.baseUri + `?method=track.getinfo&api_key=${this.key}&artist=${artist}&track=${title}&format=json`)
+            .then(function (response) {
+                    if (response.status !== 200) {
+                        console.log('Error. Status Code: ' + response.status);
+                        return;
+                    }
+                    response.json().then(function (data) {
+                        if(data.track) {
+                            songs[songIndex].listeners = data.track.listeners;
+                            songs[songIndex].playcount = data.track.playcount;
+
+                            if (data.track.album) {
+                                songs[songIndex].album = data.track.album.title;
+
+                                if (data.track.album.image[3]) {
+                                    songs[songIndex].albumImg = data.track.album.image[3]["#text"];
+                                }
+                            }
+                        }
+                    }).catch(function (err) {
+                        console.log('Error', err);
+                    });
+                }
+            )
+            .catch(function (err) {
+                console.log('Fetch Error :-S', err);
+            });
+    }
 };
 
 const clients = {
@@ -82,7 +164,7 @@ io.on('connection', function(socket){
 
 app.get('/', function(req, res) {
     res.render('index.html', {
-
+        songs: songs
     })
 });
 
@@ -95,7 +177,7 @@ app.get('/upload-form', function(req, res) {
 app.route('/upload').post(function (req, res, next) {
     let form = new formidable.IncomingForm();
     //Formidable uploads to operating systems tmp dir by default
-    form.uploadDir = "./uploads";       //set upload directory
+    form.uploadDir = "./src/assets/audio";       //set upload directory
     form.keepExtensions = true;     //keep file extension
 
     form.parse(req, function(err, fields, files) {
@@ -109,16 +191,12 @@ app.route('/upload').post(function (req, res, next) {
         console.log("file type: "+JSON.stringify(files.fileUploaded.type));
         console.log("astModifiedDate: "+JSON.stringify(files.fileUploaded.lastModifiedDate));
 
-        //Formidable changes the name of the uploaded file
-        //Rename the file to its original name
-        fs.rename(files.fileUploaded.path, './uploads/'+files.fileUploaded.name, function(err) {
-            if (err)
-                throw err;
-            console.log('renamed complete');
-        });
+        scanDir();
+
         res.end();
     });
 });
+
 
 http.listen(port, function(){
     console.log('listening on *:' + port);

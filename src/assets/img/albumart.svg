@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300px" height="300px" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>albumart</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="albumart">
+            <rect id="Rectangle" fill="#E8E8E8" x="0" y="0" width="300" height="300"></rect>
+            <path d="M184,108 L128,122.281 L128,171.062 C125.875,169.1597 123.0742,167.9995 120,167.9995 C113.3711,167.9995 108,173.3706 108,179.9995 C108,186.6284 113.3711,191.9995 120,191.9995 C126.6289,191.9995 132,186.6284 132,179.9995 L132,141.9685 L180,129.7495 L180,157.0615 C177.875,155.1592 175.0742,153.999 172,153.999 C165.3711,153.999 160,159.3701 160,165.999 C160,172.6279 165.3711,177.999 172,177.999 C178.6289,177.999 184,172.6279 184,165.999 L184,108 Z" id="Shape" fill="#C7C7C7" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>
