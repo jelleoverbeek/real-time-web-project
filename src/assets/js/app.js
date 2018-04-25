@@ -2,6 +2,7 @@
     const socket = io();
 
     const client = {
+        offlineNotification: document.querySelector(".offline"),
         id: "",
         userPlayed: function(playData) {
             socket.emit('userPlayed', playData);
@@ -35,7 +36,7 @@
         playerTitle: document.querySelector("#player-title"),
         isPlaying: false,
         setPlayerMeta: function(artist, song, src) {
-            if(src !== null) {
+            if(src) {
                 this.playerImg.src = src;
             } else {
                 this.playerImg.src = "img/albumart.svg"
@@ -107,9 +108,7 @@
             });
 
             socket.on('play', function(playData){
-                // player.setPlayerMeta(playData.artist, playData.title, playData.img);
-
-                console.log("play", playData);
+                player.setPlayerMeta(playData.artist, playData.title, playData.img);
 
                 setTimeout(function(){
                     player.play(playData.src);
@@ -121,7 +120,7 @@
             });
 
             socket.on('reconnecting', (attemps) => {
-                console.log(attemps);
+                client.offlineNotification.classList.toggle("hidden");
             })
         }
     };
