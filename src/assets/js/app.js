@@ -3,35 +3,36 @@
 
     const client = {
         id: "",
-        userPlayed: function() {
-            const playData = {
-                songSrc: player.element.src,
-                time: Date.now(),
-                latency: latency.average
-            };
-
+        userPlayed: function(playData) {
             socket.emit('userPlayed', playData);
         },
         userPaused: function() {
             socket.emit('userPaused');
         },
         init: function () {
-            document.querySelector("#play").addEventListener("click", (ev) => {
-                if(player.isPlaying) {
-                    this.userPaused();
-                    console.log('pause');
-                } else {
-                    this.userPlayed();
-                    console.log('play');
-                }
-            })
+            const _this = this;
+            let playBtns = document.querySelectorAll(".play-btn");
+
+            playBtns.forEach(function (btn) {
+                btn.addEventListener("click", function (ev) {
+                    const playData = {
+                        src: this.dataset.src,
+                        artist: this.dataset.artist,
+                        title: this.dataset.title,
+                        latency: latency.average
+                    };
+
+                    _this.userPlayed(playData);
+                })
+            });
         }
     };
 
     const player = {
         element: document.querySelector("audio"),
         isPlaying: false,
-        play: function(song) {
+        play: function(src) {
+            this.element.src = "/audio/" + src;
             this.element.play();
             this.isPlaying = true;
         },
@@ -94,16 +95,12 @@
                 client.id = userId;
             });
 
-            socket.on('play', function(latency){
-
-                console.log(latency);
+            socket.on('play', function(playData){
+                console.log(playData);
 
                 setTimeout(function(){
-
-                    player.play();
-
-                }, latency);
-
+                    player.play(playData.src);
+                }, playData.latency);
             });
 
             socket.on('pause', function(song){

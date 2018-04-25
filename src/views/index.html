@@ -4,11 +4,16 @@
 
 <section>
     <h1>Musync</h1>
-    <p>Play SoundCloud songs together and in sync with your friends.</p>
+    <p>Play songs together and in sync with your friends.</p>
 
-    <audio src="audio/song.wav" preload="auto" controls></audio>
+    <div class="song">
+        <h2>Jon Hopkins - Everything Connected</h2>
+        <audio src="audio/song-2.mp3" preload="auto" controls></audio>
+    </div>
 
-    <button id="play">Play</button>
+    {% for song in songs %}
+        <button class="play-btn" data-artist="{{ song.artist }}" data-title="{{ song.title }}" data-src="{{ song.src }}">{{ song.artist }} - {{ song.title }}</button>
+    {% endfor %}
 </section>
 
 {% endblock %}
