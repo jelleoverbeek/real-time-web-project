@@ -15,10 +15,12 @@
 
             playBtns.forEach(function (btn) {
                 btn.addEventListener("click", function (ev) {
+
                     const playData = {
                         src: this.dataset.src,
                         artist: this.dataset.artist,
                         title: this.dataset.title,
+                        img: this.dataset.albumart,
                         latency: latency.average
                     };
 
@@ -30,7 +32,13 @@
 
     const player = {
         element: document.querySelector("audio"),
+        playerImg: document.querySelector("#player-img"),
+        playerTitle: document.querySelector("#player-title"),
         isPlaying: false,
+        setPlayerMeta: function(artist, song, src) {
+            this.playerImg.src = src;
+            this.playerTitle.innerHTML = artist + "-" + song;
+        },
         play: function(src) {
             this.element.src = "/audio/" + src;
             this.element.play();
@@ -96,7 +104,7 @@
             });
 
             socket.on('play', function(playData){
-                console.log(playData);
+                player.setPlayerMeta(playData.artist, playData.title, playData.img);
 
                 setTimeout(function(){
                     player.play(playData.src);
