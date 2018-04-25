@@ -4,10 +4,14 @@
   "description": "This is the course repo for the 2018 edition of the course 'Real Time Web' which is part of the minor 'web' taught at the University of Applied Sciences Amsterdam.",
   "main": "server.js",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
     "express": "^4.15.2",
     "express-fileupload": "^0.4.0",
+    "formidable": "^1.2.1",
+    "fs-extra": "^5.0.0",
     "nunjucks": "^3.1.2",
+    "path": "^0.12.7",
     "socket.io": "^2.1.0"
   },
   "devDependencies": {

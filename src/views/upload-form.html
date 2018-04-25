@@ -1,0 +1,11 @@
+{% extends "components/_layout.html" %}
+
+{% block content %}
+
+<h1>Upload a song</h1>
+<form method='post' action="upload" enctype="multipart/form-data">
+    <input type='file' name='fileUploaded'>
+    <button type='submit'>Upload</button>
+</form>
+
+{% endblock %}
