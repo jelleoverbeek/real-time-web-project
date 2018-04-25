@@ -1,10 +1,14 @@
 require('dotenv').config();
 
-const express = require('express');
-const app = express();
-const http = require('http').Server(app);
-const nunjucks = require('nunjucks');
-const io = require('socket.io')(http);
+const express = require('express'),
+    app = express(),
+    http = require('http').Server(app),
+    nunjucks = require('nunjucks'),
+    io = require('socket.io')(http),
+    mm = require('music-metadata'),
+    util = require('util'),
+    fs = require( 'fs' ),
+    path = require( 'path' );
 
 let port = process.env.PORT || 8888;
 
@@ -15,6 +19,44 @@ nunjucks.configure('src/views', {
 });
 
 app.use(express.static(__dirname + '/src/assets'));
+
+const songs = [];
+const songDir = "./src/assets/audio";
+
+function createSongsArr() {
+    fs.readdir(songDir, function (err, files) {
+        if (err) {
+            console.error("Could not list the directory.", err);
+            process.exit(1);
+        }
+
+        files.forEach(function (file, index) {
+            let songObj;
+
+            if (file.indexOf(".mp3") > 0) {
+                let songSrc = songDir + "/" + file;
+                let artist = "";
+                let title = "";
+
+                mm.parseFile(songSrc, {native: true})
+                    .then(function (metadata) {
+                        songObj = {
+                            title: util.inspect(metadata.common.title),
+                            artist: util.inspect(metadata.common.artist),
+                            src: file
+                        };
+
+                        songs.push(songObj);
+                    })
+                    .catch(function (err) {
+                        console.error(err.message);
+                    });
+            }
+        });
+    });
+}
+
+createSongsArr();
 
 const times = {
     getServerTime: function () {
@@ -70,7 +112,7 @@ io.on('connection', function(socket){
 
 app.get('/', function(req, res) {
     res.render('index.html', {
-
+        songs: songs
     })
 });
 
