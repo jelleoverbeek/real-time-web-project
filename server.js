@@ -24,10 +24,9 @@ app.use(express.static(__dirname + '/src/assets'));
 const songs = [];
 const songDir = "./src/assets/audio";
 
-String.prototype.replaceAll = function(str1, str2, ignore)
-{
+String.prototype.replaceAll = function(str1, str2, ignore) {
     return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
-}
+};
 
 function createSongsArr() {
     fs.readdir(songDir, function (err, files) {
@@ -55,10 +54,11 @@ function createSongsArr() {
                         songObj = {
                             title: title,
                             artist: artist,
-                            src: file
+                            src: file,
                         };
 
                         songs.push(songObj);
+                        api.getSongData(artist, title, songs.length - 1);
                     })
                     .catch(function (err) {
                         console.error(err.message);
@@ -73,39 +73,39 @@ createSongsArr();
 const api = {
     baseUri: "http://ws.audioscrobbler.com/2.0/",
     key: process.env.KEY,
-    getSongData: function (artist, title) {
-        let songData;
-
+    getSongData: function (artist, title, songIndex) {
         fetch(this.baseUri + `?method=track.getinfo&api_key=${this.key}&artist=${artist}&track=${title}&format=json`)
-            .then(
-                function(response) {
+            .then(function(response) {
                     if (response.status !== 200) {
-                        console.log('Looks like there was a problem. Status Code: ' +
-                            response.status);
+                        console.log('Error. Status Code: ' + response.status);
                         return;
                     }
 
-                    // Examine the text in the response
                     response.json().then(function(data) {
-                        console.log(data);
-                    });
+                        console.log(songs[songIndex]);
+
+                        songs[songIndex].listeners = data.track.listeners;
+                        songs[songIndex].playcount = data.track.playcount;
+
+                        if(data.track.album) {
+                            songs[songIndex].album = data.track.album.title;
+
+                            if(data.track.album.image[3]) {
+                                songs[songIndex].albumImg = data.track.album.image[3]["#text"];
+                            }
+                        }
+
+                        console.log(songs)
+
+                    }).catch(function(err) {
+                        console.log('Error', err);
+                    });;
                 }
             )
             .catch(function(err) {
                 console.log('Fetch Error :-S', err);
             });
     }
-};
-
-const times = {
-    getServerTime: function () {
-        let timestamp = new Date();
-
-        timestamp = timestamp.getTime();
-        console.log(timestamp);
-
-        return timestamp;
-    },
 };
 
 const clients = {
@@ -141,11 +141,6 @@ io.on('connection', function(socket){
     });
 
     socket.on('userPlayed', function(playData){
-
-        console.log(playData);
-
-        api.getSongData(playData.artist, playData.title);
-
         io.emit('play', playData);
     });
 
@@ -155,7 +150,6 @@ io.on('connection', function(socket){
 });
 
 app.get('/', function(req, res) {
-
     res.render('index.html', {
         songs: songs
     })
