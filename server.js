@@ -74,14 +74,6 @@ app.get('/', function(req, res) {
     })
 });
 
-app.get('/new-session', function(req, res) {
-    res.render('session.html', {
-        data: {
-            sessionId: "1ABCA"
-        }
-    })
-});
-
 http.listen(port, function(){
     console.log('listening on *:' + port);
 });
