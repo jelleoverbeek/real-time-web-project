@@ -24,7 +24,7 @@
     "gulp-sass": "^4.0.1"
   },
   "scripts": {
-    "start": "gulp && nodemon server.js",
+    "start": "gulp && node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
