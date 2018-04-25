@@ -141,7 +141,10 @@ io.on('connection', function(socket){
     });
 
     socket.on('userPlayed', function(playData){
-        api.getSongData(songs[0].artist, songs[0].title);
+
+        console.log(playData);
+
+        api.getSongData(playData.artist, playData.title);
 
         io.emit('play', playData);
     });
