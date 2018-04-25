@@ -4,11 +4,16 @@
 
 <section>
     <h1>Musync</h1>
-    <p>Play SoundCloud songs together and in sync with your friends.</p>
+    <p>Play songs together and in sync with your friends.</p>
 
-    <audio src="audio/song.wav" preload="auto" controls></audio>
+    <div class="song">
+        <h2>Jon Hopkins - Everything Connected</h2>
+        <audio src="audio/song-2.mp3" preload="auto" controls></audio>
+    </div>
 
-    <button id="play">Play</button>
+    <button class="btn-song" data-artist="Jon Hopkins" data-title="Everything Connected" data-src="audio/song-2.mp3">Jon Hopkins - Everything Connected</button>
+    <button class="btn-song" data-artist="Floorplan" data-title="Tell You No Lie" data-src="audio/song-3.mp3">Floorplan - Tell You No Lie</button>
+    <button class="btn-song" data-artist="Maceo Plex" data-title="Discotico Plexico" data-src="audio/song-1.mp3">Maceo Plex - Discotico Plexico</button>
 </section>
 
 {% endblock %}
