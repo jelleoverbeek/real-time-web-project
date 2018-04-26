@@ -84,7 +84,7 @@ Using [music-metadata](https://www.npmjs.com/package/music-metadata) the metadat
 
 **The songs array will look like this:**
 
-```json
+```javascript
 [{ title: 'Tell You No Lie',
     artist: 'Floorplan',
     src: 'song-3.mp3',
