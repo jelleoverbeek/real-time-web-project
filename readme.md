@@ -84,8 +84,7 @@ socket.on('play', function(playData){
 });
 ```
 
-
-##Uploading a song
+## Uploading a song  
 [Formidable](https://www.npmjs.com/package/formidable) is used to upload songs. When submitting a file to `/upload` the file is uploaded to `./src/assets/audio`.  When a song is uploaded the server will scan the audio directory and add them to the songs array.
 
 **MP3 metadata and Last FM**
