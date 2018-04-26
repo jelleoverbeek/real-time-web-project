@@ -28,7 +28,6 @@ To install this project do this:
 
 ## Data life Cycle
 ![data life cycle](/https://d.pr/i/GWeObS+)
-![alt text][https://d.pr/i/GWeObS+]
 
 ## Socket.io
 For sending play events to all users [socket.io](https://socket.io/) is used. 
