@@ -27,7 +27,7 @@ To install this project do this:
 6. Check out `localhost:8888` for the app!
 
 ## Data life Cycle
-![data life cycle](/https://d.pr/i/GWeObS+)
+![data life cycle](https://d.pr/i/GWeObS+)
 
 ## Socket.io
 For sending play events to all users [socket.io](https://socket.io/) is used. 
