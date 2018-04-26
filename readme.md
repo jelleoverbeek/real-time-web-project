@@ -29,10 +29,8 @@ To install this project do this:
 2. `npm install`
 3. `cp .env.dist .env`
 4. Get a Last.fm key from https://www.last.fm/api and put them in the `.env` file.
-5. **Production**
-   `npm start` to compile scss and run the server.
-   **Development**
-   `gulp watch` to compile scss and `nodemon server.js` to watch for server changes.
+5. **Production:** `npm start` to compile scss and run the server.  
+   **Development:** `gulp watch` to compile scss and `nodemon server.js` to watch for server changes.
 6. Check out `localhost:8888` for the app!
 
 ## Data life Cycle
@@ -42,14 +40,14 @@ To install this project do this:
 For sending play events to all users [socket.io](https://socket.io/) is used. 
 
 #### Playing a song
-1. **Client**
+1. **Client**  
    When a user clicks on a song this event is fired.
 
 ```javascript
 socket.emit('userPlayed', playData);
 ```
 
-2. **playData**
+2. **playData**  
    The playData object looks like this:
 
 ```javascript
@@ -63,7 +61,7 @@ const playData = {
 };
 ```
 
-3. **Server**
+3. **Server**  
    The server is listening to the userPlayed event and will send a play event with the playData to all users.
 
 ```javascript
@@ -72,7 +70,7 @@ socket.on('userPlayed', function(playData){
 });
 ```
 
-4. **All clients**
+4. **All clients**  
    After receiving the play event all the clients update the player and play it.
 
 ```javascript
@@ -87,7 +85,7 @@ socket.on('play', function(playData){
 ## Uploading a song  
 [Formidable](https://www.npmjs.com/package/formidable) is used to upload songs. When submitting a file to `/upload` the file is uploaded to `./src/assets/audio`.  When a song is uploaded the server will scan the audio directory and add them to the songs array.
 
-**MP3 metadata and Last FM**
+**MP3 metadata and Last FM**  
 Using [music-metadata](https://www.npmjs.com/package/music-metadata) the metadata of the mp3s is passed to the array. With this metadata and Last.fm's [track.getInfo](https://www.last.fm/api/show/track.getInfo) API the objects in the array are enriched with more data such as album arts.
 
 **The songs array will look like this:**
