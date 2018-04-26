@@ -1,8 +1,7 @@
 # Real-time-web-project
 
 A web app where users can upload songs and listen to them together.
-
-![image-20180426101822350](/var/folders/g1/wmpnqvwd7yn17jw1hcd5k_jc0000gn/T/abnerworks.Typora/image-20180426101822350.png)
+![preview](https://d.pr/i/gYNytr+)
 
 **Demo:** http://my-sync.herokuapp.com/
 
@@ -26,6 +25,10 @@ To install this project do this:
    **Development**
    `gulp watch` to compile scss and `nodemon server.js` to watch for server changes.
 6. Check out `localhost:8888` for the app!
+
+## Data life Cycle
+![data life cycle](/https://d.pr/i/GWeObS+)
+![alt text][https://d.pr/i/GWeObS+]
 
 ## Socket.io
 For sending play events to all users [socket.io](https://socket.io/) is used. 
@@ -105,6 +108,7 @@ Using [music-metadata](https://www.npmjs.com/package/music-metadata) the metadat
 * Improve design
 * Make app assumptive.
 * Make file upload real-time.
+  ​
 
 ## License
 None
