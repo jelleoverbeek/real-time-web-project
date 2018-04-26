@@ -104,6 +104,7 @@ Using [music-metadata](https://www.npmjs.com/package/music-metadata) the metadat
 * Make rooms for the users
 * Improve design
 * Make app assumptive.
+* Make file upload real-time.
 
 ## License
 None
