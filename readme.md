@@ -6,6 +6,15 @@ A web app where users can upload songs and listen to them together.
 **Demo:** http://my-sync.herokuapp.com/
 
 ## Table of contents
+- [Real-time-web-project](#real-time-web-project)
+  * [Table of contents](#table-of-contents)
+  * [Prerequisites](#prerequisites)
+  * [Getting started](#getting-started)
+  * [Data life Cycle](#data-life-cycle)
+  * [Socket.io](#socketio)
+      - [Playing a song](#playing-a-song)
+  * [To-do list](#to-do-list)
+  * [License](#license)
 
 ## Prerequisites
 * Git
