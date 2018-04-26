@@ -106,6 +106,8 @@ const api = {
                                 }
                             }
                         }
+
+                        console.log(songs);
                     }).catch(function (err) {
                         console.log('Error', err);
                     });

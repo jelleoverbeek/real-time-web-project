@@ -109,10 +109,7 @@
 
             socket.on('play', function(playData){
                 player.setPlayerMeta(playData.artist, playData.title, playData.img);
-
-                setTimeout(function(){
-                    player.play(playData.src);
-                }, playData.latency);
+                player.play(playData.src);
             });
 
             socket.on('pause', function(song){
